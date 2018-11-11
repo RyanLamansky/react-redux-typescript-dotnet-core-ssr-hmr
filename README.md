@@ -29,3 +29,7 @@ What might _not_ be preserved is the original architecture of the .NET Core 2.0 
 - WebUI/ClientApp contains all of the front-end script, including entry points for client and server side.
 - WebUI/Controlers are conventional ASP.NET MVC-style controllers.
 - WebUI/Views are conventional ASP.NET MVC-style views.
+
+## Known Issues
+
+- Visual Studio 2017 may not restore NPM packages on startup, fix by running `npm install` manually or by expanding Depdenciesand right-clicking "npm" and choosing Restore Packages.
