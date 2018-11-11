@@ -1,59 +1,77 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace WebUI
 {
+    /// <summary>
+    /// Contains the entry point and startup logic for the application.
+    /// </summary>
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        /// <summary>
+        /// The main entry point to the program.
+        /// </summary>
+        /// <param name="arguments">Command-line arguments.</param>
+        public static void Main(string[] arguments)
         {
-            Configuration = configuration;
+            WebHost.CreateDefaultBuilder(arguments)
+                .UseStartup<Startup>()
+                .Build()
+                .Run();
         }
 
-        public IConfiguration Configuration { get; }
+        /// <summary>
+        /// Creates a new <see cref="Startup"/> instance.
+        /// </summary>
+        public Startup()
+        {
+        }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services">A collection of service descriptors.</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services
+                .AddMvc()
+                .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_1)
+                ;
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="applicationBuilder">Mechanisms to configure the application's request pipeline.</param>
+        /// <param name="hostingEnvironment">Information about the web hosting environment.</param>
+        public void Configure(IApplicationBuilder applicationBuilder, IHostingEnvironment hostingEnvironment)
         {
-            if (env.IsDevelopment())
+            if (hostingEnvironment.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-                {
-                    HotModuleReplacement = true,
-                    ReactHotModuleReplacement = true
-                });
+                applicationBuilder
+                    .UseDeveloperExceptionPage()
+                    .UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+                    {
+                        HotModuleReplacement = true,
+                        ReactHotModuleReplacement = true
+                    });
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                applicationBuilder.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-
-                routes.MapSpaFallbackRoute(
-                    name: "spa-fallback",
-                    defaults: new { controller = "Home", action = "Index" });
-            });
+            applicationBuilder
+                .UseStaticFiles()
+                .UseMvc(configureRoutes =>
+                {
+                    configureRoutes
+                        .MapRoute("default", "{controller=Home}/{action=Index}/{id?}")
+                        .MapSpaFallbackRoute("spa-fallback", new { controller = "Home", action = "Index" });
+                });
         }
     }
 }
