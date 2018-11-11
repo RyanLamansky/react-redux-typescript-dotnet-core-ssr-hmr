@@ -728,12 +728,6 @@
       "integrity": "sha512-LxFiV5mefv0ley0SzqkOPR1bC4EbpPx8LkOz5vMe/Yi15t5hzwgO/G+tc7wOtL4PZTYjwHu8JnEiSLumuSjSfA==",
       "dev": true
     },
-    "bootstrap": {
-      "version": "3.3.7",
-      "resolved": "http://registry.npmjs.org/bootstrap/-/bootstrap-3.3.7.tgz",
-      "integrity": "sha1-WjiTlFSfIzMIdaOxUGVldPip63E=",
-      "dev": true
-    },
     "brace-expansion": {
       "version": "1.1.8",
       "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.8.tgz",
@@ -2816,12 +2810,6 @@
         "whatwg-fetch": ">=0.10.0"
       }
     },
-    "jquery": {
-      "version": "3.2.1",
-      "resolved": "https://registry.npmjs.org/jquery/-/jquery-3.2.1.tgz",
-      "integrity": "sha1-XE2d5lKvbNCncBVKYxu6ErAVx4c=",
-      "dev": true
-    },
     "js-base64": {
       "version": "2.1.9",
       "resolved": "https://registry.npmjs.org/js-base64/-/js-base64-2.1.9.tgz",
@@ -3239,12 +3227,6 @@
           "dev": true
         }
       }
-    },
-    "node-noop": {
-      "version": "1.0.0",
-      "resolved": "https://registry.npmjs.org/node-noop/-/node-noop-1.0.0.tgz",
-      "integrity": "sha1-R6Pn2Az/qmRYNkvSLthcqzMHvnk=",
-      "dev": true
     },
     "normalize-package-data": {
       "version": "2.4.0",

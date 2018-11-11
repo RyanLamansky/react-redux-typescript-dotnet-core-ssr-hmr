@@ -1,3 +1,109 @@
+*, ::before, ::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    margin: 0;
+    line-height: 1.42857143;
+}
+
+h1 {
+    font-size: 36px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    line-height: 1.1;
+}
+
+a {
+    color: #337ab7;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #23527c;
+    text-decoration: underline;
+}
+
+p, ul {
+    margin: 0 0 10px;
+}
+
+code {
+    color: #c7254e;
+    background: #f9f2f4;
+    border-radius: 4px;
+    padding: 2px 4px;
+    font-size: 90%;
+    font-family: Menlo, Monaco, Consolas, Courier New, monospace;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th {
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+}
+
+th, td {
+    padding: 8px;
+    line-height: 1.42857143;
+}
+
+td {
+    border-top: 1px solid #ddd;
+}
+
+button {
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+}
+
+a.btn {
+    color: #333;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+a.btn:hover{
+    text-decoration: none;
+    background: #e6e6e6;
+    border-color: #adadad
+}
+
+.pull-left {
+    float: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.pull-right{
+    float: right;
+}
+
+.main-nav {
+    background: #222;
+}
+
 .main-nav li .glyphicon {
     margin-right: 10px;
 }
@@ -19,14 +125,64 @@
     z-index: 1;
 }
 
+.main-nav a {
+    color: #9d9d9d;
+    text-decoration: none;
+}
+
+.main-nav a:hover {
+    color: white;
+}
+
+.navbar a {
+    width: 100%;
+    display: block;
+}
+
+.navbar-brand {
+    font-size: 18px;
+    height: 50px;
+    line-height: 20px;
+    padding: 15px 15px 15px 15px;
+}
+
+.nav {
+    border-top: 1px solid #444;
+}
+
+.nav {
+    padding: 0;
+    margin: 0;
+}
+
+.nav li {
+    list-style-type: none;
+}
+
 @media (max-width: 767px) {
     /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
     body {
         padding-top: 50px;
     }
+
+    .navbar-toggle {
+        float: right;
+        padding: 0;
+        margin-top: 12px;
+        margin-right: 15px;
+        margin-bottom: 8px;
+    }
+
+    .nav:not(.show){
+        display: none;
+    }
 }
 
 @media (min-width: 768px) {
+    .navbar-toggle {
+        display: none;
+    }
+
     /* On small screens, convert the nav menu to a vertical sidebar */
     .main-nav {
         height: 100%;
@@ -53,7 +209,7 @@
         margin: 6px;
     }
     .main-nav .navbar li a {
-        padding: 10px 16px;
+        padding: 10px 10px;
         border-radius: 4px;
     }
     .main-nav .navbar a {
@@ -62,5 +218,14 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        line-height: 20px;
+    }
+
+    .main {
+        position: absolute;
+        left: 25%;
+        width: 75%;
+        padding-left: 15px;
+        padding-right: 15px;
     }
 }

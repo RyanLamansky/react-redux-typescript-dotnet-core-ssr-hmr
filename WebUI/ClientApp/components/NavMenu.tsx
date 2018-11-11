@@ -1,39 +1,44 @@
 import * as React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
-export class NavMenu extends React.Component<{}, {}> {
+export class NavMenu extends React.PureComponent<{}, {
+    readonly showNav: boolean;
+}> {
+    constructor() {
+        super();
+
+        this.state = {
+            showNav: false
+        };
+    }
+
+    toggleNav = () => {
+        this.setState({
+            showNav: !this.state.showNav
+        });
+    }
+
     public render() {
         return <div className='main-nav'>
-                <div className='navbar navbar-inverse'>
+            <div className='navbar navbar-inverse'>
                 <div className='navbar-header'>
-                    <button type='button' className='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
-                        <span className='sr-only'>Toggle navigation</span>
-                        <span className='icon-bar'></span>
-                        <span className='icon-bar'></span>
-                        <span className='icon-bar'></span>
-                    </button>
-                    <Link className='navbar-brand' to={ '/' }>TouchCode</Link>
+                    <button
+                        className='navbar-toggle'
+                        onClick={this.toggleNav}
+                    >Toggle navigation</button>
+                    <Link className='navbar-brand' to={'/'}>.NET Core React</Link>
                 </div>
-                <div className='clearfix'></div>
-                <div className='navbar-collapse collapse'>
-                    <ul className='nav navbar-nav'>
-                        <li>
-                            <NavLink exact to={ '/' } activeClassName='active'>
-                                <span className='glyphicon glyphicon-home'></span> Home
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to={ '/counter' } activeClassName='active'>
-                                <span className='glyphicon glyphicon-education'></span> Counter
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to={ '/fetchdata' } activeClassName='active'>
-                                <span className='glyphicon glyphicon-th-list'></span> Fetch data
-                            </NavLink>
-                        </li>
-                    </ul>
-                </div>
+                <ul className={`nav navbar-nav ${this.state.showNav ? 'show' : ''}`}>
+                    <li>
+                        <NavLink exact to={'/'} activeClassName='active'>Home</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to={'/counter'} activeClassName='active'>Counter</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to={'/fetchdata'} activeClassName='active'>Fetch data</NavLink>
+                    </li>
+                </ul>
             </div>
         </div>;
     }
