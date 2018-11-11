@@ -12,8 +12,8 @@ export interface CounterState {
 // They do not themselves have any side-effects; they just describe something that is going to happen.
 // Use @typeName and isActionType for type detection that works even after serialization/deserialization.
 
-interface IncrementCountAction { type: 'INCREMENT_COUNT' }
-interface DecrementCountAction { type: 'DECREMENT_COUNT' }
+interface IncrementCountAction { type: 'INCREMENT_COUNT'; }
+interface DecrementCountAction { type: 'DECREMENT_COUNT'; }
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
@@ -24,8 +24,8 @@ type KnownAction = IncrementCountAction | DecrementCountAction;
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 
 export const actionCreators = {
-    increment: () => <IncrementCountAction>{ type: 'INCREMENT_COUNT' },
-    decrement: () => <DecrementCountAction>{ type: 'DECREMENT_COUNT' }
+    increment: () => <IncrementCountAction> { type: 'INCREMENT_COUNT' },
+    decrement: () => <DecrementCountAction> { type: 'DECREMENT_COUNT' }
 };
 
 // ----------------
@@ -40,6 +40,7 @@ export const reducer: Reducer<CounterState> = (state: CounterState, action: Know
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
             const exhaustiveCheck: never = action;
+            break;
     }
 
     // For unrecognized actions (or in cases where actions have no effect), must return the existing state

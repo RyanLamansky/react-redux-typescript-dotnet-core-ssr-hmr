@@ -1,5 +1,11 @@
-import { fetch, addTask } from 'domain-task';
-import { Action, Reducer, ActionCreator } from 'redux';
+import {
+    addTask,
+    fetch
+} from 'domain-task';
+import {
+    Action,
+    Reducer
+} from 'redux';
 import { AppThunkAction } from './';
 
 // -----------------
@@ -45,7 +51,7 @@ export const actionCreators = {
     requestWeatherForecasts: (startDateIndex: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
         // Only load data if it's something we don't already have (and are not already loading)
         if (startDateIndex !== getState().weatherForecasts.startDateIndex) {
-            let fetchTask = fetch(`api/SampleData/WeatherForecasts?startDateIndex=${ startDateIndex }`)
+            const fetchTask = fetch(`api/SampleData/WeatherForecasts?startDateIndex=${ startDateIndex }`)
                 .then(response => response.json() as Promise<WeatherForecast[]>)
                 .then(data => {
                     dispatch({ type: 'RECEIVE_WEATHER_FORECASTS', startDateIndex: startDateIndex, forecasts: data });
@@ -85,6 +91,7 @@ export const reducer: Reducer<WeatherForecastsState> = (state: WeatherForecastsS
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
             const exhaustiveCheck: never = action;
+            break;
     }
 
     return state || unloadedState;

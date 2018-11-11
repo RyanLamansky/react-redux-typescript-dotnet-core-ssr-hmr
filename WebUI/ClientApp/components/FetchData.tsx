@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ApplicationState }  from '../store';
+import { ApplicationState } from '../store';
 import * as WeatherForecastsState from '../store/WeatherForecasts';
 
 // At runtime, Redux will merge together...
@@ -13,13 +13,13 @@ type WeatherForecastProps =
 class FetchData extends React.Component<WeatherForecastProps, {}> {
     componentWillMount() {
         // This method runs when the component is first added to the page
-        let startDateIndex = parseInt(this.props.match.params.startDateIndex) || 0;
+        const startDateIndex = parseInt(this.props.match.params.startDateIndex) || 0;
         this.props.requestWeatherForecasts(startDateIndex);
     }
 
     componentWillReceiveProps(nextProps: WeatherForecastProps) {
         // This method runs when incoming props (e.g., route params) change
-        let startDateIndex = parseInt(nextProps.match.params.startDateIndex) || 0;
+        const startDateIndex = parseInt(nextProps.match.params.startDateIndex) || 0;
         this.props.requestWeatherForecasts(startDateIndex);
     }
 
@@ -56,8 +56,8 @@ class FetchData extends React.Component<WeatherForecastProps, {}> {
     }
 
     private renderPagination() {
-        let prevStartDateIndex = (this.props.startDateIndex || 0) - 5;
-        let nextStartDateIndex = (this.props.startDateIndex || 0) + 5;
+        const prevStartDateIndex = (this.props.startDateIndex || 0) - 5;
+        const nextStartDateIndex = (this.props.startDateIndex || 0) + 5;
 
         return <p className='clearfix text-center'>
             <Link className='btn btn-default pull-left' to={ `/fetchdata/${ prevStartDateIndex }` }>Previous</Link>
@@ -70,4 +70,4 @@ class FetchData extends React.Component<WeatherForecastProps, {}> {
 export default connect(
     (state: ApplicationState) => state.weatherForecasts, // Selects which state properties are merged into the component's props
     WeatherForecastsState.actionCreators                 // Selects which action creators are merged into the component's props
-)(FetchData) as typeof FetchData;
+)(FetchData as any);
