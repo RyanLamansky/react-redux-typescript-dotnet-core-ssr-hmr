@@ -24,12 +24,12 @@ class FetchData extends React.Component<WeatherForecastProps, {}> {
     }
 
     public render() {
-        return <div>
+        return <>
             <h1>Weather forecast</h1>
             <p>This component demonstrates fetching data from the server and working with URL parameters.</p>
             { this.renderForecastsTable() }
             { this.renderPagination() }
-        </div>;
+        </>;
     }
 
     private renderForecastsTable() {

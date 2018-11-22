@@ -23,7 +23,7 @@ export class NavMenu extends React.Component<{}, {
 
     public render() {
         return <div className='main-nav'>
-            <div className='navbar navbar-inverse'>
+            <div className='navbar'>
                 <div className='navbar-header'>
                     <button
                         className='navbar-toggle'
