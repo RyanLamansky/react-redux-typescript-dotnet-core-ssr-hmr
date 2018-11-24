@@ -1,12 +1,3 @@
-import { Action, Reducer } from 'redux';
-
-// -----------------
-// STATE - This defines the type of data maintained in the Redux store.
-
-export interface CounterState {
-    count: number;
-}
-
 // -----------------
 // ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
 // They do not themselves have any side-effects; they just describe something that is going to happen.
@@ -24,14 +15,14 @@ type KnownAction = IncrementCountAction | DecrementCountAction;
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 
 export const actionCreators = {
-    increment: () => <IncrementCountAction> { type: 'INCREMENT_COUNT' },
-    decrement: () => <DecrementCountAction> { type: 'DECREMENT_COUNT' }
+    increment: (): IncrementCountAction => ({ type: 'INCREMENT_COUNT' }),
+    decrement: (): DecrementCountAction => ({ type: 'DECREMENT_COUNT' })
 };
 
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
-export const reducer: Reducer<CounterState> = (state: CounterState, action: KnownAction) => {
+export const reducer = (state = { count: 0 }, action: KnownAction) => {
     switch (action.type) {
         case 'INCREMENT_COUNT':
             return { count: state.count + 1 };
@@ -39,11 +30,11 @@ export const reducer: Reducer<CounterState> = (state: CounterState, action: Know
             return { count: state.count - 1 };
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
-            const exhaustiveCheck: never = action;
+            const exhaustiveCheck = action;
             break;
     }
 
     // For unrecognized actions (or in cases where actions have no effect), must return the existing state
     //  (or default initial state if none was supplied)
-    return state || { count: 0 };
+    return state;
 };

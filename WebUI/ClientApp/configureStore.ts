@@ -45,6 +45,6 @@ export default function configureStore(history: History, initialState?: Applicat
     return store;
 }
 
-function buildRootReducer(allReducers: ReducersMapObject) {
-    return combineReducers<ApplicationState>(Object.assign({}, allReducers, { routing: routerReducer }));
+function buildRootReducer(allReducers: typeof reducers) {
+    return combineReducers<ApplicationState>({ ...allReducers, routing: routerReducer } as ReducersMapObject);
 }

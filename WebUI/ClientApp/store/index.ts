@@ -3,8 +3,8 @@ import * as Counter from './Counter';
 
 // The top-level state object
 export interface ApplicationState {
-    counter: Counter.CounterState;
-    weatherForecasts: WeatherForecasts.WeatherForecastsState;
+    readonly counter: ReturnType<typeof Counter.reducer>;
+    readonly weatherForecasts: ReturnType<typeof WeatherForecasts.reducer>;
 }
 
 // Whenever an action is dispatched, Redux will update each top-level application state property using
