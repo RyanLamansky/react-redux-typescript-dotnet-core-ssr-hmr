@@ -1,25 +1,25 @@
 ﻿# React + Redux + TypeScript + .NET Core + Server-Side Rendering (SSR) + Hot Module Replacement (HMR)
 
-A sample project combining a variety of useful web development technologies originally shown to work together with .NET Core 2.0.
+A sample project combining a variety of useful web development technologies originally shown to work together with .NET Core 2.0's `dotnet new reactredux`, but updated for .NET Core 2.1 and newer versions of various libraries.
 
 ## Background
 
-When .NET Core 2.0 was released, it included an excellent project template that combined React and Redux for the front end, .NET Core for the web API, with support both server-side rendering (SSR) and hot module replacement (HMR).
+When .NET Core 2.0 was released, it included an excellent project template that combined React and Redux for the front end, .NET Core for the web API, with support for both server-side rendering (SSR) and hot module replacement (HMR).
 It was amazing!
 
 When .NET Core 2.1 was released, this template was replaced by a much more primitive one that lacked SSR and HMR.
 
 ## About this Project
 
-This repository aims to preserve the useful feature set of the original .NET Core 2.0 template while keeping the client and server side libraries up to date.
+This repository aims to preserve the useful feature set of the original .NET Core 2.0 template while keeping the client and server-side libraries up to date.
 It is not in any way endorsed or supported by Microsoft, but it may prove useful to others who want this combination for their own projects.
 
-What might _not_ be preserved is the original architecture of the .NET Core 2.0 project.
-- It used Bootstrap, which pulls in JQuery, neither of which are needed for a clean-slate React project.
-- Some of the 3rd party libraries it used are not being maintained and should be replaced.
-- It originally separated 3rd party libraries into a secondary "vendor" JS bundle, with the intent of improving build performance, but the process it used complicates development and the gains are minimal, plus "tree shaking" is ineffective, resulting in a larger total JS download.
-- The file and folder structure and naming patterns were inconsistent.
-- MVC-style views were somewhat overused for a React project.
+Besides updating to newer versions of dependencies, it has been modified in the following ways:
+- JQuery and Bootstrap have been replaced by hand-crafted SCSS and JavaScript, reducing bundle size considerably.
+- The separate "vendor" JavaScript bundle has been removed; it had several negative side effects that weren't worth the gains.
+- Code quality has improved through use of newer TypeScript features.
+
+If time permits, the project will continue to be updated and improved, but there are no specific plans.
 
 ## Structure
 
@@ -32,4 +32,4 @@ What might _not_ be preserved is the original architecture of the .NET Core 2.0 
 
 ## Known Issues
 
-- Visual Studio 2017 may not restore NPM packages on startup, fix by running `npm install` manually or by expanding Depdenciesand right-clicking "npm" and choosing Restore Packages.
+- Visual Studio 2017 may not restore NPM packages on startup, fix by running `npm install` manually or by expanding Depdencies and right-clicking "npm" and choosing Restore Packages.
