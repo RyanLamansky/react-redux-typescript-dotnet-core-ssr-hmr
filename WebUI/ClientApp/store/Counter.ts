@@ -1,3 +1,5 @@
+import { FunctionReturnTypes } from '.';
+
 // -----------------
 // ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
 // They do not themselves have any side-effects; they just describe something that is going to happen.
@@ -5,10 +7,6 @@
 
 interface IncrementCountAction { type: 'INCREMENT_COUNT'; }
 interface DecrementCountAction { type: 'DECREMENT_COUNT'; }
-
-// Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
-// declared type strings (and not any other arbitrary string).
-type KnownAction = IncrementCountAction | DecrementCountAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -22,7 +20,7 @@ export const actionCreators = {
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
-export const reducer = (state = { count: 0 }, action: KnownAction) => {
+export const reducer = (state = { count: 0 }, action: FunctionReturnTypes<typeof actionCreators>) => {
     switch (action.type) {
         case 'INCREMENT_COUNT':
             return { count: state.count + 1 };
