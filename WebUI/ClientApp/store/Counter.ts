@@ -1,38 +1,25 @@
-import { FunctionReturnTypes } from '.';
+import { Action, FunctionReturnTypes } from '.';
 
-// -----------------
-// ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
-// They do not themselves have any side-effects; they just describe something that is going to happen.
-// Use @typeName and isActionType for type detection that works even after serialization/deserialization.
-
-interface IncrementCountAction { type: 'INCREMENT_COUNT'; }
-interface DecrementCountAction { type: 'DECREMENT_COUNT'; }
-
-// ----------------
-// ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
-// They don't directly mutate state, but they can have external side-effects (such as loading data).
+// Constant enums are coverted to plain numbers by the TypeScript compiler, improving size efficiency compared to strings.
+const enum ActionType {
+    Increment,
+    Decrement
+}
 
 export const actionCreators = {
-    increment: (): IncrementCountAction => ({ type: 'INCREMENT_COUNT' }),
-    decrement: (): DecrementCountAction => ({ type: 'DECREMENT_COUNT' })
+    increment: (): Action<ActionType.Increment> => ({ type: ActionType.Increment }),
+    decrement: (): Action<ActionType.Decrement> => ({ type: ActionType.Decrement })
 };
-
-// ----------------
-// REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
 export const reducer = (state = { count: 0 }, action: FunctionReturnTypes<typeof actionCreators>) => {
     switch (action.type) {
-        case 'INCREMENT_COUNT':
+        case ActionType.Increment:
             return { count: state.count + 1 };
-        case 'DECREMENT_COUNT':
+        case ActionType.Decrement:
             return { count: state.count - 1 };
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
-            const exhaustiveCheck = action;
-            break;
+            const exhaustiveCheck: never = action;
+            return state;
     }
-
-    // For unrecognized actions (or in cases where actions have no effect), must return the existing state
-    //  (or default initial state if none was supplied)
-    return state;
 };

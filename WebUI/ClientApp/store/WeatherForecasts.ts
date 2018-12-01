@@ -2,58 +2,52 @@ import {
     addTask,
     fetch
 } from 'domain-task';
-import { AppThunkAction } from './';
+import { Action, AppThunkAction } from '.';
 
-export interface WeatherForecast {
-    dateFormatted: string;
-    temperatureC: number;
-    temperatureF: number;
-    summary: string;
+// Constant enums are coverted to plain numbers by the TypeScript compiler, improving size efficiency compared to strings.
+const enum ActionType {
+    Request,
+    Receive
 }
 
-// -----------------
-// ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
-// They do not themselves have any side-effects; they just describe something that is going to happen.
-
-interface RequestWeatherForecastsAction {
-    type: 'REQUEST_WEATHER_FORECASTS';
-    startDateIndex: number;
+interface WeatherForecast {
+    readonly dateFormatted: string;
+    readonly temperatureC: number;
+    readonly temperatureF: number;
+    readonly summary: string;
 }
 
-interface ReceiveWeatherForecastsAction {
-    type: 'RECEIVE_WEATHER_FORECASTS';
-    startDateIndex: number;
-    forecasts: WeatherForecast[];
+interface RequestWeatherForecastsAction extends Action<ActionType.Request> {
+    readonly startDateIndex: number;
 }
 
-// Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
-// declared type strings (and not any other arbitrary string).
+interface ReceiveWeatherForecastsAction extends Action<ActionType.Receive> {
+    readonly startDateIndex: number;
+    readonly forecasts: WeatherForecast[];
+}
+
 type KnownAction = RequestWeatherForecastsAction | ReceiveWeatherForecastsAction;
 
-// ----------------
-// ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
-// They don't directly mutate state, but they can have external side-effects (such as loading data).
-
 export const actionCreators = {
-    requestWeatherForecasts: (startDateIndex: number): AppThunkAction<KnownAction> =>  (dispatch, getState) => {
+    requestWeatherForecasts: (startDateIndex: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
+
+        const state = getState();
+
         // Only load data if it's something we don't already have (and are not already loading)
-        if (startDateIndex === getState().weatherForecasts.startDateIndex) {
+        if (state.weatherForecasts && startDateIndex === state.weatherForecasts.startDateIndex) {
             return;
         }
 
         const fetchTask = fetch(`api/SampleData/WeatherForecasts?startDateIndex=${startDateIndex}`)
             .then(response => response.json() as Promise<WeatherForecast[]>)
             .then(data => {
-                dispatch({ type: 'RECEIVE_WEATHER_FORECASTS', startDateIndex: startDateIndex, forecasts: data });
+                dispatch({ type: ActionType.Receive, startDateIndex: startDateIndex, forecasts: data });
             });
 
         addTask(fetchTask); // Ensure server-side prerendering waits for this to complete
-        dispatch({ type: 'REQUEST_WEATHER_FORECASTS', startDateIndex: startDateIndex });
+        dispatch({ type: ActionType.Request, startDateIndex: startDateIndex });
     }
 };
-
-// ----------------
-// REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
 export const reducer = (
     state = {
@@ -63,15 +57,14 @@ export const reducer = (
     },
     action: KnownAction) => {
     switch (action.type) {
-        case 'REQUEST_WEATHER_FORECASTS':
+        case ActionType.Request:
             return {
                 startDateIndex: action.startDateIndex,
                 forecasts: state.forecasts,
                 isLoading: true
             };
-        case 'RECEIVE_WEATHER_FORECASTS':
-            // Only accept the incoming data if it matches the most recent request. This ensures we correctly
-            // handle out-of-order responses.
+        case ActionType.Receive:
+            // Only accept the incoming data if it matches the most recent request. This ensures we correctly handle out-of-order responses.
             if (action.startDateIndex === state.startDateIndex) {
                 return {
                     startDateIndex: action.startDateIndex,
@@ -82,9 +75,7 @@ export const reducer = (
             break;
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
-            const exhaustiveCheck = action;
-            break;
+            const exhaustiveCheck: never = action;
+            return state;
     }
-
-    return state;
 };

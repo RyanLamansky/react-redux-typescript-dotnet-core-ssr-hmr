@@ -23,3 +23,9 @@ export interface AppThunkAction<TAction> {
 
 /** Extracts the return types of every function on the provided type. */
 export type FunctionReturnTypes<T> = { [K in keyof T]: T[K] extends (...args: any[]) => any ? ReturnType<T[K]> : never }[keyof T];
+
+/** Applies a strict type to a reducer's action data. */
+export interface Action<Type> {
+    /** The type of action. */
+    readonly type: Type;
+}
