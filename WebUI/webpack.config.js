@@ -62,7 +62,11 @@ module.exports = (env) => {
                 { test: /\.(png|jpg|jpeg|gif|svg)$/, use: 'url-loader?limit=25000' }
             ]
         },
-        plugins: [new CheckerPlugin()]
+        plugins: [
+            new CheckerPlugin(),
+            new webpack.NormalModuleReplacementPlugin(
+                /\/iconv-loader$/, 'node-noop',
+            )]
     });
 
     // Configuration for client-side bundle suitable for running in browsers
@@ -83,6 +87,10 @@ module.exports = (env) => {
             ]
         },
         output: { path: path.join(__dirname, clientBundleOutputDir) },
+        performance: {
+            maxAssetSize: 350000,
+            maxEntrypointSize: 350000
+        },
         plugins: [
             new miniCssExtractPlugin({
                 filename: 'site.css'
