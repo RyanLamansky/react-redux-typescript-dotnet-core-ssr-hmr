@@ -10,6 +10,12 @@ const enum ActionType {
     Receive
 }
 
+export interface WeatherForecastsState {
+    isLoading: boolean;
+    startDateIndex?: number;
+    forecasts?: WeatherForecast[];
+}
+
 interface WeatherForecast {
     readonly dateFormatted: string;
     readonly temperatureC: number;
@@ -50,9 +56,7 @@ export const actionCreators = {
 };
 
 export const reducer = (
-    state = {
-        startDateIndex: undefined,
-        forecasts: undefined,
+    state: WeatherForecastsState = {
         isLoading: false
     },
     action: KnownAction) => {

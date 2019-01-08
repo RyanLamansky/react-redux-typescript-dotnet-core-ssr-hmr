@@ -10,7 +10,7 @@ type WeatherForecastProps =
     & typeof actionCreators      // ... plus action creators we've requested
     & RouteComponentProps<{ startDateIndex: string }>; // ... plus incoming routing parameters
 
-class FetchData extends React.Component<WeatherForecastProps, {}> {
+class FetchData extends React.Component<WeatherForecastProps> {
     componentWillMount() {
         // This method runs when the component is first added to the page
         const startDateIndex = parseInt(this.props.match.params.startDateIndex) || 0;
