@@ -18,7 +18,7 @@
     "aspnet-webpack-react": "4.0.0",
     "awesome-typescript-loader": "5.2.1",
     "css-hot-loader": "1.4.0",
-    "css-loader": "0.28.9",
+    "css-loader": "^3.1.0",
     "domain-task": "3.0.3",
     "event-source-polyfill": "0.0.9",
     "file-loader": "0.11.2",
